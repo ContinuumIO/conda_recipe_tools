@@ -53,7 +53,7 @@ def main():
             latest_version = find_latest_version(name, update_type, extra)
             lookup_fail = False
         except FeatureNotFound as e:
-            # this will raise is bs4 cannot use lxml as a feature to parse html
+            # this will raise if bs4 cannot use lxml as a feature to parse html
             raise e
         except ConnectionError as e:
             # this will happen when there is a timeout
@@ -65,8 +65,8 @@ def main():
             # this will happen when we cannot find a suitable url
             latest_version = 'no_versions_found'
         except NoCustomLookupError as e:
-            # this happens when lookup_type is custom but we don't have it
-            # implemented
+            # This happens when lookup_type is 'custom' in ad_pkg_info
+            # but we don't have it implemented yet in conda_recipe_tools/find_version.py
             latest_version = 'custom_lookup_not_implemented'
         except Exception as e:
             # everything else
