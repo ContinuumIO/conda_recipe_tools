@@ -159,6 +159,8 @@ class CondaRecipe(object):
              'number: {}'.format(build_number)),
             ('(?=\s*?){%\s*set build_number\s*=\s*"?([0-9]+)"?\s*%}',
              '{{% set build_number = {} %}}'.format(build_number)),
+            ('(?=\s*?){%\s*set build_num\s*=\s*"?([0-9]+)"?\s*%}',
+             '{{% set build_num = {} %}}'.format(build_number)),
             ('(?=\s*?){%\s*set build\s*=\s*"?([0-9]+)"?\s*%}',
              '{{% set build = {} %}}'.format(build_number)),
         )
