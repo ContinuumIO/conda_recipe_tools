@@ -85,6 +85,8 @@ class CondaRecipe(object):
     @property
     def hash_type(self):
         source_section = self._parsed['source']
+        if isinstance(source_section, list):
+            source_section = source_section[0]
         if 'md5' in source_section:
             hash_type = 'md5'
         elif 'sha256' in source_section:
@@ -99,9 +101,12 @@ class CondaRecipe(object):
     def url(self):
         try:
             source_section = self._parsed['source']
+            if isinstance(source_section, list):
+                source_section = source_section[0]
         except KeyError as e:
             print('Recipe does not have a source section.')
             raise e
+
         if 'url' in source_section:
             return source_section['url']
         else:
@@ -119,6 +124,8 @@ class CondaRecipe(object):
         if self.hash_type is None:
             return None
         else:
+            if isinstance(self._parsed['source'], list):
+                return self._parsed['source'][0][self.hash_type]
             return self._parsed['source'][self.hash_type]
 
     @hash_value.setter
@@ -152,6 +159,8 @@ class CondaRecipe(object):
              'number: {}'.format(build_number)),
             ('(?=\s*?){%\s*set build_number\s*=\s*"?([0-9]+)"?\s*%}',
              '{{% set build_number = {} %}}'.format(build_number)),
+            ('(?=\s*?){%\s*set build_num\s*=\s*"?([0-9]+)"?\s*%}',
+             '{{% set build_num = {} %}}'.format(build_number)),
             ('(?=\s*?){%\s*set build\s*=\s*"?([0-9]+)"?\s*%}',
              '{{% set build = {} %}}'.format(build_number)),
         )
